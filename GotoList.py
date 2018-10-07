@@ -125,7 +125,7 @@ def getItems(url_path="0", tq="select A,B,C,D,E"):
 	tracking_string : string
 		 Tên dễ đọc của view
 	'''
-	# Default VN Open Playlist Sheet ID
+	# Default Gshare Media Sheet ID
 
 	sheet_id = GetSheetIDFromSettings()
 	gid = url_path
@@ -158,7 +158,7 @@ def getItems(url_path="0", tq="select A,B,C,D,E"):
 		item = {}
 		item["label"] = getValue(row["c"][0]).encode("utf-8")
 		item["label2"] = getValue(row["c"][4])
-		# Nếu phát hiện spreadsheet khác với VNOpenPlaylist
+		# Nếu phát hiện spreadsheet khác với Gshare Media
 		new_path = getValue(row["c"][1])
 		if "@" in url_path and "@" not in new_path and "section/" in new_path:
 			gid = re.compile("section/(\d+)").findall(new_path)[0]
@@ -232,15 +232,15 @@ def getItems(url_path="0", tq="select A,B,C,D,E"):
 				# https://www.youtube.com/channel/UC-9-kyTW8ZkZNDHQJ6FgpwQ
 				yt_route = "ytcp" if "playlists" in item["path"] else "ytc"
 				yt_cid = re.compile("youtube.com/channel/(.+?)$").findall(item["path"])[0]
-				item["path"] = "plugin://plugin.video.kodi4vn.launcher/%s/%s/" % (
+				item["path"] = "plugin://plugin.video.salemmax.search.youtube/%s/%s/" % (
 					yt_route, yt_cid)
 				item["path"] = item["path"].replace("/playlists", "")
 			elif "youtube.com/playlist" in item["path"]:
 				# https://www.youtube.com/playlist?list=PLFgquLnL59alCl_2TQvOiD5Vgm1hCaGSI
 				yt_pid = re.compile("list=(.+?)$").findall(item["path"])[0]
-				item["path"] = "plugin://plugin.video.kodi4vn.launcher/ytp/%s/" % yt_pid
+				item["path"] = "plugin://plugin.video.salemmax.search.youtube/ytp/%s/" % yt_pid
 			elif any(ext in item["path"] for ext in [".png", ".jpg", ".bmp", ".jpeg"]):
-				item["path"] = "plugin://plugin.video.kodi4vn.launcher/showimage/%s/" % urllib.quote_plus(
+				item["path"] = "plugin://plugin.video.salemmax.search.youtube/showimage/%s/" % urllib.quote_plus(
 					item["path"])
 			elif re.search("\.ts$", item["path"]):
 				item["path"] = "plugin://plugin.video.f4mTester/?url=%s&streamtype=TSDOWNLOADER&use_proxy_for_chunks=True&name=%s" % (
@@ -261,9 +261,9 @@ def getItems(url_path="0", tq="select A,B,C,D,E"):
 			"context_menu": [
 				ClearPlaylists(""),
 			],
-			"label": "[COLOR yellow]*** Thêm Playlist ***[/COLOR]",
+			"label": "[B][COLOR cyan]===>[COLOR blueviolet]Thêm Playlist[/COLOR]<===[/B][/COLOR]",
 			"path": "%s/add-playlist" % (pluginrootpath),
-			"thumbnail": "http://1.bp.blogspot.com/-gc1x9VtxIg0/VbggLVxszWI/AAAAAAAAANo/Msz5Wu0wN4E/s1600/playlist-advertorial.png"
+			"thumbnail": "http://sv1.upsieutoc.com/2017/08/14/themplaylist.png"
 		}
 		items += [add_playlist_item]
 		playlists = plugin.get_storage('playlists')
@@ -290,7 +290,7 @@ def getItems(url_path="0", tq="select A,B,C,D,E"):
 						pluginrootpath,
 						section.split("] ")[-1]
 					)
-				item["thumbnail"] = "http://1.bp.blogspot.com/-gc1x9VtxIg0/VbggLVxszWI/AAAAAAAAANo/Msz5Wu0wN4E/s1600/playlist-advertorial.png"
+				item["thumbnail"] = "http://sv1.upsieutoc.com/2017/08/14/themplaylist.png"
 				items.append(item)
 	return items
 
@@ -355,7 +355,7 @@ def CachedSection(path="0", tracking_string="Home"):
 
 
 @plugin.route('/password-section/<password>/<path>/<tracking_string>')
-def PasswordSection(password="0000", path="0", tracking_string="Home"):
+def PasswordSection(password="012340", path="0", tracking_string="Home"):
 	'''
 	Liệt kê danh sách các item của một sheet
 	Parameters
@@ -688,7 +688,7 @@ def RepoSection(path="0", tracking_string=""):
 		"label": "[COLOR green]Tự động cài tất cả Repo dưới (khuyên dùng)[/COLOR]".decode("utf-8"),
 		"path": pluginrootpath + "/install-repo/%s/%s" % (path, urllib.quote_plus("Install all repo")),
 		"is_playable": False,
-		"info": {"plot": "Bạn nên cài tất cả repo để sử dụng đầy đủ tính năng của [VN Open Playlist]"}
+		"info": {"plot": "Bạn nên cài tất cả repo để sử dụng đầy đủ tính năng của [Gshare Media]"}
 	}
 	items = [install_all_item] + items
 	return plugin.finish(items)
@@ -1147,8 +1147,8 @@ def GA(title="Home", page="/"):
 			'tid': 'UA-52209804-5',  # Thay GA id của bạn ở đây
 			'cid': client_id,
 			't': 'pageview',
-			'dp': "VNPlaylist%s" % page,
-			'dt': "[VNPlaylist] - %s" % title
+			'dp': "Gshare.Media%s" % page,
+			'dt': "[Gshare.Media] - %s" % title
 		}
 		http.request(
 			ga_url, "POST",
