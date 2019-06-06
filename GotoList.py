@@ -270,7 +270,7 @@ def getItems(url_path="0", tq="select A,B,C,D,E"):
 			"context_menu": [
 				ClearPlaylists(""),
 			],
-			"label":"[B][COLOR cyan]===>[COLOR blueviolet]Thêm Playlist[/COLOR]<===[/B][/COLOR",
+			"label":"[B][COLOR cyan]===>[COLOR blueviolet]Thêm Playlist[/COLOR]<===[/B][/COLOR]",
 			"path": "%s/add-playlist" % (pluginrootpath),
 			"thumbnail": "http://sv1.upsieutoc.com/2017/08/14/themplaylist.png",
 			"is_playable": True,
